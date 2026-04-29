@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Profile Card</title>
+    <style>
+        /* 1. CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 2. Full-screen centering with a gradient background */
+        body {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+        }
+
+        /* 3. The Glassmorphism Card */
+        .profile-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+            /* Smooth transition for the hover lift effect */
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+        }
+
+        /* 4. Circular Avatar using Flexbox for center alignment */
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .avatar h2 {
+            font-size: 36px;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* 5. Typography */
+        .name {
+            font-size: 24px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .title {
+            font-size: 14px;
+            color: #d1d5db;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .bio {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #e5e7eb;
+            margin-bottom: 25px;
+        }
+
+        /* 6. Button Layout & Styling */
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .github { background-color: #333; }
+        
+        /* Updated to a LeetCode-style Orange */
+        .leetcode { background-color: #d97706; } 
+
+        /* Button hover animations */
+        .btn:hover {
+            transform: scale(1.05); /* Slightly enlarges the button */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .github:hover {
+            background-color: #444;
+            border-color: #fff;
+        }
+
+        /* Lighter orange for the LeetCode hover effect */
+        .leetcode:hover {
+            background-color: #f59e0b; 
+            border-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="profile-card">
+            <div class="avatar">
+                <h2>YK</h2>
+            </div>
+            
+            <h1 class="name">Yash Krishnan</h1>
+            <p class="title">Full-Stack Developer</p>
+            <p class="bio">Passionate about building clean, modern, and interactive web applications using the MERN stack.</p>
+            
+            <div class="social-links">
+                <a href="https://github.com/YashKrishnan24" target="_blank" class="btn github">GitHub</a>
+                <a href="https://leetcode.com/u/Yash_Krishnan/" target="_blank" class="btn leetcode">LeetCode</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
