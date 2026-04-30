@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Product Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #1e293b, #0f172a);
+            color: #ffffff;
+            padding: 40px 20px;
+        }
+
+        .showcase {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+        }
+
+        .card-container {
+            width: 300px;
+            height: 400px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .card-container:hover .card-inner {
+            transform: rotateY(180deg) translateY(-10px);
+        }
+
+        .card-front, .card-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-1 .card-front { background: linear-gradient(135deg, #3b82f6, #8b5cf6); }
+        .theme-2 .card-front { background: linear-gradient(135deg, #f43f5e, #fb923c); }
+        .theme-3 .card-front { background: linear-gradient(135deg, #10b981, #06b6d4); }
+
+        .product-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
+            transition: transform 0.3s;
+        }
+
+        .card-container:hover .product-icon {
+            transform: scale(1.1);
+        }
+
+        .card-front h2 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .card-front p {
+            margin-top: 10px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .card-back {
+            background-color: #1e293b;
+            transform: rotateY(180deg);
+            border: 2px solid transparent;
+        }
+
+        .theme-1 .card-back { border-color: #8b5cf6; }
+        .theme-2 .card-back { border-color: #f43f5e; }
+        .theme-3 .card-back { border-color: #10b981; }
+
+        .card-back h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .theme-1 .card-back h3 { color: #8b5cf6; }
+        .theme-2 .card-back h3 { color: #f43f5e; }
+        .theme-3 .card-back h3 { color: #10b981; }
+
+        .details {
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: center;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.3s;
+        }
+
+        .theme-1 .btn { background-color: #8b5cf6; }
+        .theme-2 .btn { background-color: #f43f5e; }
+        .theme-3 .btn { background-color: #10b981; }
+
+        .btn:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase">
+        <div class="card-container theme-1">
+            <div class="card-inner">
+                <div class="card-front">
+                    <div class="product-icon">🎧</div>
+                    <h2>Aura Pro</h2>
+                    <p>Hover to view details</p>
+                </div>
+                <div class="card-back">
+                    <h3>Product Details</h3>
+                    <p class="details">
+                        Experience studio-quality sound with next-generation active noise cancellation and a 40-hour battery life.
+                    </p>
+                    <button class="btn">Add to Cart - $199</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container theme-2">
+            <div class="card-inner">
+                <div class="card-front">
+                    <div class="product-icon">⌚</div>
+                    <h2>Nova Fit</h2>
+                    <p>Hover to view details</p>
+                </div>
+                <div class="card-back">
+                    <h3>Product Details</h3>
+                    <p class="details">
+                        Track your fitness journey with precision. Features advanced biometrics, GPS, and an OLED display.
+                    </p>
+                    <button class="btn">Add to Cart - $249</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container theme-3">
+            <div class="card-inner">
+                <div class="card-front">
+                    <div class="product-icon">📸</div>
+                    <h2>Eco Lens</h2>
+                    <p>Hover to view details</p>
+                </div>
+                <div class="card-back">
+                    <h3>Product Details</h3>
+                    <p class="details">
+                        Capture the world in stunning 4K. Built with sustainable materials and an ultra-wide angle lens.
+                    </p>
+                    <button class="btn">Add to Cart - $599</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
