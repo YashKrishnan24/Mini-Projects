@@ -229,16 +229,15 @@
             opacity: 0;
         }
 
+        /* Replaced the clip properties with a solid color and a subtle glow */
         .text-gradient {
-            background: linear-gradient(to right, #fff, #a1a1aa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
         .text-accent {
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--accent-2);
+            text-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
         }
 
         .hero p {
