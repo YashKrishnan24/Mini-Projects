@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oceania - Aquatic Fluid Gallery</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #020617;
+            overflow-x: hidden;
+            color: #ffffff;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #0ea5e9;
+            border-radius: 4px;
+        }
+
+        .liquid-background {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 150vw;
+            height: 150vw;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .fluid-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            animation: fluidSpin 20s linear infinite;
+        }
+
+        .fluid-layer:nth-child(1) {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(14, 165, 233, 0.1), rgba(2, 132, 199, 0.2));
+            animation-duration: 25s;
+        }
+
+        .fluid-layer:nth-child(2) {
+            width: 95%;
+            height: 95%;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(3, 105, 161, 0.1));
+            animation-duration: 30s;
+            animation-direction: reverse;
+            border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%;
+        }
+
+        .fluid-layer:nth-child(3) {
+            width: 90%;
+            height: 90%;
+            background: radial-gradient(circle, rgba(125, 211, 252, 0.1), transparent);
+            animation-duration: 35s;
+        }
+
+        @keyframes fluidSpin {
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes floatDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(2, 6, 23, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 100;
+            animation: floatDown 0.8s ease forwards;
+        }
+
+        .nav-brand {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-decoration: none;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-dot {
+            width: 12px;
+            height: 12px;
+            background: #0ea5e9;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #0ea5e9;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: #bae6fd;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #0ea5e9;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .main-content {
+            padding: 140px 8% 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: floatUp 1s ease forwards 0.2s;
+            opacity: 0;
+        }
+
+        .eyebrow {
+            color: #38bdf8;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .main-title {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            color: #ffffff;
+        }
+
+        .text-fluid {
+            color: #ffffff;
+            text-shadow: 0 0 30px rgba(14, 165, 233, 0.6);
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: clamp(16px, 2vw, 20px);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .gallery-container {
+            display: flex;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            animation: floatUp 1s ease forwards 0.4s;
+            opacity: 0;
+        }
+
+        .glass-card {
+            position: relative;
+            width: 340px;
+            height: 480px;
+            border-radius: 24px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s ease;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            z-index: 5;
+            pointer-events: none;
+            transition: border-color 0.5s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 40px 60px rgba(14, 165, 233, 0.15);
+        }
+
+        .glass-card:hover::before {
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .card-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
+            filter: brightness(0.7) saturate(1.1);
+        }
+
+        .glass-card:hover .card-image {
+            transform: scale(1.12);
+            filter: brightness(1) saturate(1.3);
+        }
+
+        .card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: linear-gradient(to top, rgba(2, 6, 23, 0.95), transparent);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2.5rem 2rem;
+            transform: translateY(30px);
+            opacity: 0.9;
+            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .glass-card:hover .card-overlay {
+            transform: translateY(0);
+            opacity: 1;
+            background: linear-gradient(to top, rgba(2, 6, 23, 0.95) 30%, rgba(14, 165, 233, 0.15));
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .category {
+            color: #38bdf8;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease 0.1s;
+        }
+
+        .title {
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            transition: transform 0.5s ease;
+        }
+
+        .description {
+            color: #bae6fd;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            transform: translateY(20px);
+            opacity: 0;
+            height: 0;
+            transition: all 0.5s ease;
+        }
+
+        .glass-card:hover .category,
+        .glass-card:hover .description {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .glass-card:hover .description {
+            height: 70px;
+            margin-top: 12px;
+        }
+
+        .glass-card:hover .title {
+            transform: translateY(-5px);
+        }
+
+        .ripple-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.15) 0%, transparent 60%);
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.8s ease;
+            z-index: 3;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        .glass-card:hover .ripple-effect {
+            opacity: 1;
+            transform: scale(2.5);
+        }
+
+        @media (max-width: 900px) {
+            nav {
+                padding: 20px 5%;
+            }
+            .nav-links {
+                display: none;
+            }
+            .main-content {
+                padding-top: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="nav-brand">
+            <div class="brand-dot"></div>
+            Oceania.
+        </a>
+        <div class="nav-links">
+            <a href="#">Expeditions</a>
+            <a href="#">Marine Life</a>
+            <a href="#">Ecosystems</a>
+            <a href="#">About Us</a>
+        </div>
+    </nav>
+
+    <div class="liquid-background">
+        <div class="fluid-layer"></div>
+        <div class="fluid-layer"></div>
+        <div class="fluid-layer"></div>
+    </div>
+
+    <main class="main-content">
+        <div class="header-section">
+            <span class="eyebrow">The Digital Aquarium</span>
+            <h1 class="main-title">Explore the <span class="text-fluid">Deep Blue</span></h1>
+            <p class="subtitle">Immerse yourself in the mysteries of the aquatic realm. Hover over the archives below to reveal the hidden depths of our oceans.</p>
+        </div>
+
+        <div class="gallery-container">
+            
+            <div class="glass-card">
+                <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=800&auto=format&fit=crop" alt="Ocean Waves" class="card-image">
+                <div class="ripple-effect"></div>
+                <div class="card-overlay">
+                    <span class="category">Currents</span>
+                    <h2 class="title">Tidal Shift</h2>
+                    <p class="description">Witness the raw power of the ocean as tides collide and form mesmerizing patterns across the deep blue.</p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=800&auto=format&fit=crop" alt="Jellyfish" class="card-image">
+                <div class="ripple-effect"></div>
+                <div class="card-overlay">
+                    <span class="category">Abyss</span>
+                    <h2 class="title">Bioluminescence</h2>
+                    <p class="description">Explore the alien landscapes of the deep sea where light is created by the creatures themselves.</p>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <img src="https://images.unsplash.com/photo-1436891620584-47fd0e565afb?q=80&w=800&auto=format&fit=crop" alt="Crystal Water" class="card-image">
+                <div class="ripple-effect"></div>
+                <div class="card-overlay">
+                    <span class="category">Clarity</span>
+                    <h2 class="title">Azure Springs</h2>
+                    <p class="description">Discover hidden crystalline waters that reflect the sky perfectly, untouched by the modern world.</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
