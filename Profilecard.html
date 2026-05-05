@@ -3,144 +3,456 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Profile Card</title>
+    <title>Yash Krishnan - Portfolio</title>
     <style>
-        /* 1. CSS Reset */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-dark: #0f1115;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.05);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
         }
 
-        /* 2. Full-screen centering with a gradient background */
         body {
-            height: 100vh;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        .bg-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            animation: float 20s infinite alternate;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--primary), transparent);
+            top: -10%;
+            left: -10%;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--secondary), transparent);
+            bottom: -20%;
+            right: -10%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, 50px) scale(1.1); }
+            100% { transform: translate(-30px, 20px) scale(0.9); }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 17, 21, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-light);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .btn-contact {
+            padding: 8px 20px;
+            border-radius: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-contact:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #1f1c2c, #928dab);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #fff;
+            justify-content: space-between;
+            padding: 100px 8% 0;
+            gap: 50px;
         }
 
-        /* 3. The Glassmorphism Card */
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h3 {
+            color: var(--primary);
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero-text p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
         .profile-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 40px 30px;
-            width: 320px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 50px 40px;
+            width: 350px;
             text-align: center;
-            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
-            /* Smooth transition for the hover lift effect */
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+            position: relative;
         }
 
         .profile-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+            transform: translateY(-15px) rotateY(5deg);
+            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.2);
         }
 
-        /* 4. Circular Avatar using Flexbox for center alignment */
         .avatar {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 50%;
-            margin: 0 auto 20px;
+            margin: 0 auto 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 4px solid rgba(255, 255, 255, 0.3);
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .avatar h2 {
-            font-size: 36px;
+            font-size: 40px;
             font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
         }
 
-        /* 5. Typography */
         .name {
-            font-size: 24px;
+            font-size: 26px;
             margin-bottom: 5px;
             font-weight: 600;
         }
 
         .title {
             font-size: 14px;
-            color: #d1d5db;
+            color: var(--primary);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
 
-        .bio {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #e5e7eb;
-            margin-bottom: 25px;
-        }
-
-        /* 6. Button Layout & Styling */
         .social-links {
             display: flex;
             gap: 15px;
             justify-content: center;
+            margin-top: 30px;
         }
 
         .btn {
             text-decoration: none;
             color: #fff;
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 12px 25px;
+            border-radius: 30px;
             font-size: 14px;
             font-weight: 500;
             transition: all 0.3s ease;
-            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .github { background-color: #333; }
+        .github { 
+            background: rgba(255, 255, 255, 0.1); 
+            border: 1px solid var(--glass-border);
+        }
         
-        /* Updated to a LeetCode-style Orange */
-        .leetcode { background-color: #d97706; } 
+        .leetcode { 
+            background: rgba(217, 119, 6, 0.2);
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            color: #fcd34d;
+        } 
 
-        /* Button hover animations */
         .btn:hover {
-            transform: scale(1.05); /* Slightly enlarges the button */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .github:hover {
-            background-color: #444;
-            border-color: #fff;
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        /* Lighter orange for the LeetCode hover effect */
         .leetcode:hover {
-            background-color: #f59e0b; 
-            border-color: #fff;
+            background: rgba(217, 119, 6, 0.4); 
+        }
+
+        .section-container {
+            padding: 100px 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), transparent);
+            border-radius: 2px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .skill-tag {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            font-size: 14px;
+            color: var(--text-light);
+            transition: all 0.3s;
+            cursor: default;
+        }
+
+        .skill-tag:hover {
+            background: rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 8%;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 50px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        @media (max-width: 968px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 150px;
+            }
+            .hero-text p {
+                margin: 0 auto 30px;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="card-container">
-        <div class="profile-card">
-            <div class="avatar">
-                <h2>YK</h2>
-            </div>
-            
-            <h1 class="name">Yash Krishnan</h1>
-            <p class="title">Full-Stack Developer</p>
-            <p class="bio">Passionate about building clean, modern, and interactive web applications using the MERN stack.</p>
-            
-            <div class="social-links">
-                <a href="https://github.com/YashKrishnan24" target="_blank" class="btn github">GitHub</a>
-                <a href="https://leetcode.com/u/Yash_Krishnan/" target="_blank" class="btn leetcode">LeetCode</a>
+
+    <div class="bg-elements">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <nav>
+        <a href="#" class="logo">YK<span>.</span></a>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+        </div>
+        <a href="mailto:yashkrishnan07@gmail.com" class="btn-contact">Get in Touch</a>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-text">
+            <h3>Welcome to my world</h3>
+            <h1>Building digital<br>experiences.</h1>
+            <p>I engineer seamless, interactive, and scalable web applications from the ground up, blending clean code with striking modern aesthetics.</p>
+        </div>
+        
+        <div class="hero-visual">
+            <div class="profile-card">
+                <div class="avatar">
+                    <h2>YK</h2>
+                </div>
+                
+                <h1 class="name">Yash Krishnan</h1>
+                <p class="title">Full-Stack Developer</p>
+                
+                <div class="social-links">
+                    <a href="https://github.com/YashKrishnan24" target="_blank" class="btn github">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    <a href="https://leetcode.com/u/Yash_Krishnan/" target="_blank" class="btn leetcode">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.939 5.939 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114l5.789-6.195a.524.524 0 0 1 .737-.034l7.669 6.88a.525.525 0 0 1 .022.75l-4.102 4.398h-9.2a.525.525 0 0 0-.371.895l.04.041c.099.1.233.156.373.156h10.428a.524.524 0 0 0 .372-.148l4.903-5.253a1.374 1.374 0 0 0-.026-1.937l-8.918-7.994A1.375 1.375 0 0 0 13.483 0zm-2.022 17.584a.524.524 0 0 0-.372.894l.039.041c.099.1.234.156.373.156h8.847a.525.525 0 0 0 .373-.895l-.04-.04a.525.525 0 0 0-.372-.156h-8.848z"/></svg>
+                        LeetCode
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section id="about" class="section-container">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>Hello! I'm Yash, a passionate Full-Stack Developer with a strong focus on the MERN stack. I specialize in bridging the gap between elegant interface design and robust backend architecture.</p>
+                <p>My journey in software engineering has been driven by a constant curiosity to learn new technologies and solve complex algorithmic challenges. When I'm not crafting web experiences, you can find me optimizing solutions on LeetCode.</p>
+                <p>I believe that the best applications are not just functional, but visually captivating and intuitive.</p>
+            </div>
+            
+            <div>
+                <h3 style="color: var(--text-light); margin-bottom: 20px; font-weight: 500;">Core Arsenal</h3>
+                <div class="skills-container">
+                    <div class="skill-tag">MongoDB</div>
+                    <div class="skill-tag">Express.js</div>
+                    <div class="skill-tag">React</div>
+                    <div class="skill-tag">Node.js</div>
+                    <div class="skill-tag">JavaScript (ES6+)</div>
+                    <div class="skill-tag">TypeScript</div>
+                    <div class="skill-tag">Tailwind CSS</div>
+                    <div class="skill-tag">HTML5 & CSS3</div>
+                    <div class="skill-tag">Git & GitHub</div>
+                    <div class="skill-tag">RESTful APIs</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Yash Krishnan. Engineered with modern web standards.</p>
+    </footer>
+
 </body>
 </html>
