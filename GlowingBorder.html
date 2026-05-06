@@ -3,152 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animated Glowing Border</title>
+    <title>Next-Gen Pricing Cards</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-color: #030305;
+            --card-bg: #0c0c0e;
+            --card-border: #1f1f22;
+            --text-primary: #ffffff;
+            --text-secondary: #8b8b93;
+            --glow-color-1: #38bdf8;
+            --glow-color-2: #818cf8;
+            --glow-color-3: #c084fc;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #09090b; 
-            color: #ffffff;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            padding: 40px 20px;
+            /* Subtle modern grid background */
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        .glow-wrapper {
+        .pricing-container {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* Base Card Styling */
+        .card {
+            width: 100%;
+            max-width: 340px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px 32px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
             position: relative;
-            width: 320px;
-            height: 420px;
-            border-radius: 20px;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* The Highlighted Animated Glow Card */
+        .card-premium-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            border-radius: 24px;
+            padding: 2px; /* This padding creates the border thickness */
+            overflow: hidden;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-            transition: box-shadow 0.5s ease, transform 0.5s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-shadow: 0 0 30px rgba(129, 140, 248, 0.15);
         }
 
-        .glow-wrapper:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.4), 0 0 80px rgba(255, 0, 255, 0.2);
+        .card-premium-wrapper:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 50px rgba(129, 140, 248, 0.3);
         }
 
-        .glow-wrapper::before {
+        /* Rotating Gradient */
+        .card-premium-wrapper::before {
             content: "";
             position: absolute;
-            width: 150%;
-            height: 150%;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
             background: conic-gradient(
                 transparent, 
-                transparent, 
-                transparent, 
-                #00ffff, 
-                #ff00ff, 
+                var(--glow-color-1), 
+                var(--glow-color-2), 
+                var(--glow-color-3), 
                 transparent 30%
             );
-            animation: rotate-gradient 4s linear infinite;
+            animation: rotate-border 4s linear infinite;
         }
 
-        @keyframes rotate-gradient {
+        @keyframes rotate-border {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        .card-inner {
-            position: absolute;
-            inset: 3px; 
-            background-color: #121214;
-            border-radius: 17px;
-            z-index: 10;
+        /* Inner Premium Card masking the gradient center */
+        .card-premium-inner {
+            background-color: #0a0a0c;
+            border-radius: 22px;
+            padding: 38px 30px;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            padding: 40px 30px;
+            z-index: 2;
         }
 
         .tag {
             align-self: flex-start;
-            background: rgba(0, 255, 255, 0.1);
-            color: #00ffff;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+        }
+
+        .tag-basic {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--card-border);
+        }
+
+        .tag-premium {
+            background: rgba(129, 140, 248, 0.1);
+            color: var(--glow-color-1);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            box-shadow: 0 0 15px rgba(129, 140, 248, 0.2);
         }
 
         .title {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
-            margin-bottom: 15px;
-            line-height: 1.2;
-            background: linear-gradient(to right, #ffffff, #a1a1aa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .premium-text {
+            color: var(--glow-color-1);
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
         }
 
         .description {
-            color: #a1a1aa;
-            font-size: 15px;
+            color: var(--text-secondary);
+            font-size: 14px;
             line-height: 1.6;
-            flex-grow: 1;
+            margin-bottom: 32px;
+            min-height: 44px;
         }
 
-        .cta {
+        .price-container {
+            margin-bottom: 32px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            align-items: flex-end;
+            gap: 4px;
         }
 
         .price {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -1px;
         }
 
-        .icon-btn {
-            background: #ffffff;
-            color: #000000;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .interval {
+            color: var(--text-secondary);
+            font-size: 15px;
+            font-weight: 500;
+            padding-bottom: 6px;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 40px;
+            flex-grow: 1;
+        }
+
+        .feature-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-            transition: transform 0.3s ease;
+            gap: 12px;
+            font-size: 14px;
+            color: #d1d1d6;
+            margin-bottom: 16px;
         }
 
-        .icon-btn:hover {
-            transform: scale(1.1) rotate(15deg);
+        .check-icon {
+            color: var(--glow-color-2);
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px 0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--card-border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #3f3f46;
+        }
+
+        .btn-filled {
+            background: var(--text-primary);
+            color: #000000;
+        }
+
+        .btn-filled:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
 <body>
-    <div class="glow-wrapper">
-        <div class="card-inner">
-            <span class="tag">Premium</span>
-            <h1 class="title">Next-Gen Analytics</h1>
-            <p class="description">
-                Unlock real-time data processing with our cutting-edge AI engine. 
-                Experience seamless integration and unparalleled speed.
-            </p>
+
+    <div class="pricing-container">
+        
+        <!-- Standard Card -->
+        <div class="card">
+            <span class="tag tag-basic">Starter</span>
+            <h2 class="title">Hobby</h2>
+            <p class="description">Perfect for individuals building side projects and prototypes.</p>
             
-            <div class="cta">
-                <span class="price">$49<span style="font-size: 14px; color: #a1a1aa;">/mo</span></span>
-                <a href="#" class="icon-btn">→</a>
+            <div class="price-container">
+                <span class="price">$0</span>
+                <span class="interval">/mo</span>
+            </div>
+
+            <ul class="features-list">
+                <li class="feature-item"><span class="check-icon">✓</span> Up to 3 projects</li>
+                <li class="feature-item"><span class="check-icon">✓</span> Community support</li>
+                <li class="feature-item"><span class="check-icon">✓</span> Basic analytics</li>
+                <li class="feature-item" style="opacity: 0.4;"><span class="check-icon">−</span> Custom domains</li>
+            </ul>
+
+            <a href="#" class="btn btn-outline">Start Building</a>
+        </div>
+
+        <!-- Animated Glowing Card -->
+        <div class="card-premium-wrapper">
+            <div class="card-premium-inner">
+                <span class="tag tag-premium">Most Popular</span>
+                <h2 class="title premium-text">Pro Node</h2>
+                <p class="description">Advanced features and dedicated resources for scaling applications.</p>
+                
+                <div class="price-container">
+                    <span class="price">$49</span>
+                    <span class="interval">/mo</span>
+                </div>
+
+                <ul class="features-list">
+                    <li class="feature-item"><span class="check-icon">✓</span> Unlimited projects</li>
+                    <li class="feature-item"><span class="check-icon">✓</span> 24/7 Priority support</li>
+                    <li class="feature-item"><span class="check-icon">✓</span> Real-time AI analytics</li>
+                    <li class="feature-item"><span class="check-icon">✓</span> Custom domains & SSL</li>
+                </ul>
+
+                <a href="#" class="btn btn-filled">Upgrade to Pro</a>
             </div>
         </div>
+
+        <!-- Standard Card -->
+        <div class="card">
+            <span class="tag tag-basic">Enterprise</span>
+            <h2 class="title">Scale</h2>
+            <p class="description">Custom infrastructure and SLAs for large-scale organizations.</p>
+            
+            <div class="price-container">
+                <span class="price">$299</span>
+                <span class="interval">/mo</span>
+            </div>
+
+            <ul class="features-list">
+                <li class="feature-item"><span class="check-icon">✓</span> Dedicated server nodes</li>
+                <li class="feature-item"><span class="check-icon">✓</span> 99.99% Uptime SLA</li>
+                <li class="feature-item"><span class="check-icon">✓</span> Custom security policies</li>
+                <li class="feature-item"><span class="check-icon">✓</span> Account manager</li>
+            </ul>
+
+            <a href="#" class="btn btn-outline">Contact Sales</a>
+        </div>
+
     </div>
+
 </body>
 </html>
