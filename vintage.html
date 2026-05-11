@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yaadein Archive - Vintage Finds</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #eaddcf;
+            color: #2c2a25;
+            font-family: 'Space Mono', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.08;
+            mix-blend-mode: multiply;
+        }
+
+        nav {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed #b5a898;
+            position: relative;
+            z-index: 10;
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #8b3a3a;
+            text-decoration: none;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand::before {
+            content: '★';
+            font-size: 1.2rem;
+            color: #d4af37;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #4a4a4a;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #8b3a3a;
+            bottom: -5px;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+
+        .nav-links a:hover {
+            color: #8b3a3a;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .hero {
+            padding: 4rem 5%;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .stamp {
+            position: absolute;
+            top: 2rem;
+            right: 15%;
+            width: 120px;
+            height: 120px;
+            border: 3px solid #8b3a3a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            color: #8b3a3a;
+            font-size: 0.9rem;
+            transform: rotate(15deg);
+            opacity: 0.7;
+            pointer-events: none;
+            mix-blend-mode: multiply;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5rem);
+            color: #2c2a25;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span {
+            font-style: italic;
+            color: #5c6b5d;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #5a574f;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 4rem 5% 8rem;
+            perspective: 1000px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .polaroid {
+            background: #fdfbf7;
+            padding: 15px 15px 60px 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15), inset 0 0 20px rgba(0,0,0,0.02);
+            width: 320px;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .polaroid::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 10px rgba(139, 58, 58, 0.1);
+            pointer-events: none;
+        }
+
+        .polaroid:nth-child(1) { transform: rotate(-8deg) translateY(20px); }
+        .polaroid:nth-child(2) { transform: rotate(3deg) translateY(-10px); z-index: 2; }
+        .polaroid:nth-child(3) { transform: rotate(-4deg) translateY(30px); }
+
+        .polaroid:hover {
+            transform: rotate(0deg) translateY(-20px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+            z-index: 10;
+        }
+
+        .photo {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            filter: sepia(0.6) contrast(1.1) grayscale(0.2);
+            transition: filter 0.5s ease;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .polaroid:hover .photo {
+            filter: sepia(0) contrast(1) grayscale(0);
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            color: #2c2a25;
+            transform: rotate(-2deg);
+        }
+
+        .polaroid:nth-child(2) .caption { transform: rotate(1deg); }
+        .polaroid:nth-child(3) .caption { transform: rotate(-3deg); }
+
+        .tape {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+            width: 100px;
+            height: 35px;
+            background-color: rgba(235, 235, 220, 0.6);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 2px dashed rgba(0,0,0,0.1);
+            border-right: 2px dashed rgba(0,0,0,0.1);
+            backdrop-filter: blur(2px);
+            z-index: 5;
+        }
+
+        .polaroid:nth-child(2) .tape { transform: translateX(-50%) rotate(3deg); background-color: rgba(220, 235, 230, 0.5); }
+        .polaroid:nth-child(3) .tape { transform: translateX(-50%) rotate(-4deg); }
+
+        .marquee-container {
+            width: 100%;
+            background: #2c2a25;
+            color: #eaddcf;
+            padding: 15px 0;
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+            border-top: 4px solid #8b3a3a;
+            border-bottom: 4px solid #8b3a3a;
+        }
+
+        .marquee-content {
+            display: flex;
+            white-space: nowrap;
+            animation: scroll 20s linear infinite;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .marquee-content span {
+            padding: 0 30px;
+        }
+
+        .marquee-content span::before {
+            content: '✦';
+            margin-right: 30px;
+            color: #d4af37;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+            .stamp { right: 5%; width: 80px; height: 80px; font-size: 0.7rem; }
+            .polaroid { width: 280px; }
+            .photo { height: 280px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grain-overlay"></div>
+
+    <nav>
+        <a href="#" class="brand">Yaadein.Co</a>
+        <div class="nav-links">
+            <a href="#">Bazaar</a>
+            <a href="#">Kisse</a>
+            <a href="#">Tasveerein</a>
+            <a href="#">Sampark</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="stamp">100%<br>ASLI<br>VINTAGE</div>
+        <h1>Retro Finds & <br><span>Purana Vibes</span></h1>
+        <p>Curating thrifty classics and analog memories. A digital thela for the nostalgia-obsessed generation.</p>
+    </div>
+
+    <div class="gallery">
+        <div class="polaroid">
+            <div class="tape"></div>
+            <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d?auto=format&fit=crop&w=800&q=80" alt="Vintage Camera" class="photo">
+            <div class="caption">Grandpa ka Lens</div>
+        </div>
+
+        <div class="polaroid">
+            <div class="tape"></div>
+            <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80" alt="Chai" class="photo">
+            <div class="caption">Nukkad Wali Chai</div>
+        </div>
+
+        <div class="polaroid">
+            <div class="tape"></div>
+            <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=800&q=80" alt="Classic Motorcycle" class="photo">
+            <div class="caption">Purani Bullet</div>
+        </div>
+    </div>
+
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <span>Thrifty Finds</span>
+            <span>Analog Memories</span>
+            <span>Jugaad Tech</span>
+            <span>Vintage Aesthetics</span>
+            <span>Thrifty Finds</span>
+            <span>Analog Memories</span>
+            <span>Jugaad Tech</span>
+            <span>Vintage Aesthetics</span>
+        </div>
+    </div>
+
+</body>
+</html>
